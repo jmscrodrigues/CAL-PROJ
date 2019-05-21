@@ -480,13 +480,15 @@ void Graph<T>::floydWarshallShortestPath() {
 			dist[i][j] = 0;
 		}
 	}
+
 	for(int k = 0; k < nVert; k++){
 		for(int i = 0; i < nVert; i++){
 			for(int j = 0; j < nVert; j++){
-				if(dist[i][k] + dist[k][j] < dist[i][j])
+				if(dist[i][k] + dist[k][j] < dist[i][j]){
 					dist[i][j] = dist[i][k] + dist[k][j];
 					minDist.at(i).at(j) =  dist[i][j];
 					next.at(i).at(j) = next.at(i).at(k);
+				}
 			}
 		}
 	}
