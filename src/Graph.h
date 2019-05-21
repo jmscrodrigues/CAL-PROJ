@@ -8,6 +8,9 @@
 #include <queue>
 #include <iterator>
 #include <deque>
+#include <list>
+#include <limits>
+#include <cmath>
 #include "MutablePriorityQueue.h"
 
 using namespace std;
@@ -457,6 +460,7 @@ void Graph<T>::unweightedShortestPath(const T &orig) {
     }
 }
 
+
 template<class T>
 void Graph<T>::floydWarshallShortestPath() {
     int dist[this->vertexSet.size()][this->vertexSet.size()];
@@ -477,7 +481,6 @@ template<class T>
 vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	vector<T> res;
 	int nVert = vertexSet.size();
-	int dist[nVert][nVert];
 
 	Vertex<T> * v1, *v2;
 	v1 = findVertex(orig);
@@ -485,24 +488,25 @@ vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	if (v1 == NULL || v2 == NULL) return res;
 
 	int a, b;
-	for (int i = 0; i < nVert; i++)
-		if (vertexSet.at(i)->info == v1->info)
+	for (int i = 0; i < nVert; i++){
+		if (vertexSet.at(i)->info == v1->info){
 			a = i;
-	for (int i = 0; i < nVert; i++)
-		if (vertexSet.at(i)->info == v2->info)
+		}
+		if (vertexSet.at(i)->info == v2->info){
 			b = i;
+		}
+	}
 
-	if(dist[a][b] == NULL) return res;
-	//if (next.at(a).at(b) == NULL) return res;
+	if(next.at(a).at(b) == NULL) return res;
 	res.push_back(v1->info);
 	while (v1->info != v2->info) {
-		v1 = dist[a][b];
-		//v1 = next.at(a).at(b);
+		v1 = next.at(a).at(b);
 		res.push_back(v1->info);
 		for (int i = 0; i < nVert; i++)
 			if (vertexSet.at(i)->info == v1->info)
 				a = i;
 	}
+
 	return res;
 }
 
