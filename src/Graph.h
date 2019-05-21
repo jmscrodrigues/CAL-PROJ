@@ -477,29 +477,31 @@ template<class T>
 vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	vector<T> res;
 	int nVert = vertexSet.size();
+	int dist[nVert][nVert];
 
 	Vertex<T> * v1, *v2;
 	v1 = findVertex(orig);
 	v2 = findVertex(dest);
 	if (v1 == NULL || v2 == NULL) return res;
 
-	int i1, i2;
+	int a, b;
 	for (int i = 0; i < nVert; i++)
 		if (vertexSet.at(i)->info == v1->info)
-			i1 = i;
+			a = i;
 	for (int i = 0; i < nVert; i++)
 		if (vertexSet.at(i)->info == v2->info)
-			i2 = i;
+			b = i;
 
-
-	if (next.at(i1).at(i2) == NULL) return res;
+	if(dist[a][b] == NULL) return res;
+	//if (next.at(a).at(b) == NULL) return res;
 	res.push_back(v1->info);
 	while (v1->info != v2->info) {
-		v1 = next.at(i1).at(i2);
+		v1 = dist[a][b];
+		//v1 = next.at(a).at(b);
 		res.push_back(v1->info);
 		for (int i = 0; i < nVert; i++)
 			if (vertexSet.at(i)->info == v1->info)
-				i1 = i;
+				a = i;
 	}
 	return res;
 }
