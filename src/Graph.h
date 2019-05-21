@@ -52,6 +52,8 @@ public:
 template <class T>
 class Graph {
 	vector<Vertex<T> *> vertexSet;    // vertex set
+	vector<vector<double>> minDist;
+	vector<vector<Vertex<T>*>> next;
 
 	void dfsVisit(Vertex<T> *v,  vector<T> & res) const;
 	Vertex<T> *findVertex(const T &in) const;
@@ -463,18 +465,31 @@ void Graph<T>::unweightedShortestPath(const T &orig) {
 
 template<class T>
 void Graph<T>::floydWarshallShortestPath() {
-    int dist[this->vertexSet.size()][this->vertexSet.size()];
-    for (int i = 0; i < this->vertexSet.size(); i++)
-        for (int j = 0; j < this->vertexSet.size(); j++)
-            dist[i][j] = 0;
-    for(int k = 0; k < this->vertexSet.size(); k++){
-        for(int i = 0; i < this->vertexSet.size(); i++){
-            for(int j = 0; j < this->vertexSet.size(); j++){
-                if(dist[i][k] + dist[k][j] < dist[i][j])
-                    dist[i][j] = dist[i][k] + dist[k][j];
-            }
-        }
-    }
+	int nVert = this->vertexSet.size();
+
+	minDist.resize(nVert);
+	for (auto & ele : minDist) ele.resize(nVert);
+
+	next.resize(nVert);
+	for (auto & ele : next) ele.resize(nVert);
+
+
+	int dist[nVert][nVert];
+	for (int i = 0; i < nVert; i++){
+		for (int j = 0; j < nVert; j++){
+			dist[i][j] = 0;
+		}
+	}
+	for(int k = 0; k < nVert; k++){
+		for(int i = 0; i < nVert; i++){
+			for(int j = 0; j < nVert; j++){
+				if(dist[i][k] + dist[k][j] < dist[i][j])
+					dist[i][j] = dist[i][k] + dist[k][j];
+					minDist.at(i).at(j) =  dist[i][j];
+					next.at(i).at(j) = next.at(i).at(k);
+			}
+		}
+	}
 }
 
 template<class T>
@@ -506,7 +521,6 @@ vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 			if (vertexSet.at(i)->info == v1->info)
 				a = i;
 	}
-
 	return res;
 }
 

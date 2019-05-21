@@ -11,7 +11,7 @@
             			
             <provider-reference id="org.eclipse.cdt.managedbuilder.core.MBSLanguageSettingsProvider" ref="shared-provider"/>
             			
-            <provider class="org.eclipse.cdt.managedbuilder.internal.language.settings.providers.GCCBuiltinSpecsDetectorMinGW" console="false" env-hash="1249926846648780378" id="org.eclipse.cdt.managedbuilder.core.GCCBuiltinSpecsDetectorMinGW" keep-relative-paths="false" name="CDT GCC Built-in Compiler Settings MinGW" parameter="${COMMAND} ${FLAGS} -E -P -v -dD &quot;${INPUTS}&quot; -std=c++1z" prefer-non-shared="true" store-entries-with-project="true">
+            <provider class="org.eclipse.cdt.managedbuilder.internal.language.settings.providers.GCCBuiltinSpecsDetectorMinGW" console="false" env-hash="548368534873642618" id="org.eclipse.cdt.managedbuilder.core.GCCBuiltinSpecsDetectorMinGW" keep-relative-paths="false" name="CDT GCC Built-in Compiler Settings MinGW" parameter="${COMMAND} ${FLAGS} -E -P -v -dD &quot;${INPUTS}&quot; -std=c++1z" prefer-non-shared="true" store-entries-with-project="true">
                 				
                 <language-scope id="org.eclipse.cdt.core.gcc"/>
                 				
@@ -4529,7 +4529,7 @@
             			
             <provider-reference id="org.eclipse.cdt.managedbuilder.core.MBSLanguageSettingsProvider" ref="shared-provider"/>
             			
-            <provider class="org.eclipse.cdt.managedbuilder.internal.language.settings.providers.GCCBuiltinSpecsDetectorMinGW" console="false" env-hash="1249926846648780378" id="org.eclipse.cdt.managedbuilder.core.GCCBuiltinSpecsDetectorMinGW" keep-relative-paths="false" name="CDT GCC Built-in Compiler Settings MinGW" parameter="${COMMAND} ${FLAGS} -E -P -v -dD &quot;${INPUTS}&quot; -std=c++1z" prefer-non-shared="true" store-entries-with-project="true">
+            <provider class="org.eclipse.cdt.managedbuilder.internal.language.settings.providers.GCCBuiltinSpecsDetectorMinGW" console="false" env-hash="548368534873642618" id="org.eclipse.cdt.managedbuilder.core.GCCBuiltinSpecsDetectorMinGW" keep-relative-paths="false" name="CDT GCC Built-in Compiler Settings MinGW" parameter="${COMMAND} ${FLAGS} -E -P -v -dD &quot;${INPUTS}&quot; -std=c++1z" prefer-non-shared="true" store-entries-with-project="true">
                 				
                 <language-scope id="org.eclipse.cdt.core.gcc"/>
                 				
