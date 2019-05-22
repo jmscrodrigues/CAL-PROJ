@@ -30,44 +30,50 @@ int main() {
     cin >> city;
     Graph<Location> gr;
     switch(city) {
-        case '1':
+        case 1:
         chosenCity = "Aveiro";
         break;
 
-        case '2':
+        case 2:
         chosenCity = "Braga";
         break;
 
-        case '3':
+        case 3:
         chosenCity = "Coimbra";
         break;
 
-        case '4':
+        case 4:
         chosenCity = "Ermesinde";
         break;
 
-        case '5':
+        case 5:
         chosenCity = "Fafe";
         break;
 
-        case '6':
+        case 6:
         chosenCity = "Gondomar";
         break;
 
-        case '7':
+        case 7:
         chosenCity = "Lisboa";
         break;
 
-        case '8':
+        case 8:
         chosenCity = "Maia";
         break;
 
-        case '9':
+        case 9:
         chosenCity = "Porto";
         break;
         
-        case '10':
+        case 10:
         chosenCity = "Viseu";
         break;
     }
+
+    if (readFile(chosenCity, &gr)) {}
+    else {
+        cout << "Pqp!\n";
+    }
+    return 0;
 }
