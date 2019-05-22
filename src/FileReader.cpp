@@ -77,11 +77,11 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
 }
 
 
-tempEdge::tempEdge(Location o, Location d){
+tempEdge::tempEdge(Location o, Location d) {
     this->origin = o;
     this->dest = d;
 
-    this->w = sqrt(pow((d.getX - o.getX), 2) + pow((d.getY - o.getY), 2));
+    this->w = sqrt(pow((d.getX() - o.getX()), 2) + pow((d.getY() - o.getY()), 2));
 }
 
 Location tempEdge::getOrigin(){
