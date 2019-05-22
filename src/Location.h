@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <vector>
 
@@ -17,9 +19,4 @@ public:
 
 };
 
-bool operator==(const Location& lhs, const Location& rhs){
-    if(lhs.getID() == rhs.getID())
-        return true;
-    else
-        return false;
-}
+bool operator==(const Location& lhs, const Location& rhs);

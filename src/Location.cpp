@@ -30,3 +30,10 @@ bool Location::checkIfHasTag(std::string tag) const{
 void Location::addTag(std::string tag){
     (this->tags).push_back(tag);
 }
+
+bool operator==(const Location& lhs, const Location& rhs){
+    if(lhs.getID() == rhs.getID())
+        return true;
+    else
+        return false;
+}
