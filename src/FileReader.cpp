@@ -1,6 +1,6 @@
 #include "FileReader.h"
 
-bool readFile(std::string selectedLocation, Graph<Location> graph){
+bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::ifstream inputStream;
     std::string line;
     std::vector<Location> nodes;
@@ -66,10 +66,10 @@ bool readFile(std::string selectedLocation, Graph<Location> graph){
 
     //push everything into the graph
     for(size_t i = 0; i < nodes.size(); i++){
-        graph.addVertex(nodes.at(i));
+        graph->addVertex(nodes.at(i));
     }
     for(size_t i = 0; i < edges.size(); i++){
-        graph.addEdge(edges.at(i).getOrigin(), edges.at(i).getDest(), edges.at(i).getW());
+        graph->addEdge(edges.at(i).getOrigin(), edges.at(i).getDest(), edges.at(i).getW());
     }
     return true;
 }

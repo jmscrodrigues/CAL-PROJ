@@ -3,7 +3,7 @@
 #include "Graph.h"
 #include "Location.h"
 
-bool readFile(std::string selectedLocation, Graph<Location> graph);
+bool readFile(std::string selectedLocation, Graph<Location> * graph);
 
 class tempEdge{
     Location origin, dest;
