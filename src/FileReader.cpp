@@ -6,9 +6,11 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::vector<Location> nodes;
     std::vector<tempEdge> edges;
 
-    std::string nodesFileName = "T04_nodes_X_Y_" + selectedLocation + ".txt";
-    std::string edgesFileName = "T04_edges_" + selectedLocation + ".txt";
-    std::string tagsFileName = "T04_tags_" + selectedLocation + ".txt";
+
+    std::string folderPath = "maps/" + selectedLocation + "/";
+    std::string nodesFileName = folderPath + "T04_nodes_X_Y_" + selectedLocation + ".txt";
+    std::string edgesFileName = folderPath + "T04_edges_" + selectedLocation + ".txt";
+    std::string tagsFileName = folderPath + "T04_tags_" + selectedLocation + ".txt";
 
     //get nodes
     inputStream.open(nodesFileName);
