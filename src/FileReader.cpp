@@ -62,7 +62,11 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
         Location tempDestLoc(std::stoi(destNode),0,0);
         std::vector<Location>::iterator originLoc = find(nodes.begin(), nodes.end(), tempOriginLoc);
         std::vector<Location>::iterator destLoc = find(nodes.begin(), nodes.end(), tempDestLoc);
-        edges.push_back(tempEdge(*originLoc, *destLoc));
+        if (originLoc != nodes.end() && destLoc != nodes.end()) {
+        	Location l1 = *originLoc;
+        	Location l2 = *destLoc;
+        	edges.push_back(tempEdge(l1, l2));
+        }
     }
     inputStream.close();
 
@@ -77,9 +81,7 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
 }
 
 
-tempEdge::tempEdge(Location o, Location d) {
-    this->origin = o;
-    this->dest = d;
+tempEdge::tempEdge(Location &o, Location &d):origin(o) , dest(d) {
 
     this->w = sqrt(pow((d.getX() - o.getX()), 2) + pow((d.getY() - o.getY()), 2));
 }

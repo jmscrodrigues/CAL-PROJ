@@ -1,10 +1,6 @@
 #include "Location.h"
 
-Location::Location(int id, double x, double y) {
-    this->id  = id;
-    this->x = x;
-    this->y = y;
-    this->expectedDeliveries = 0;
+Location::Location(int id, double x, double y) : id(id) , x(x),y(y) , expectedDeliveries(0) {
 }
 
 double Location::getX() const{

@@ -11,7 +11,7 @@ class tempEdge{
 
 public:
 
-    tempEdge(Location o, Location d);
+    tempEdge(Location &o, Location &d);
 
     Location getOrigin();
     Location getDest();
