@@ -71,7 +71,9 @@ int main() {
         break;
     }
 
-    if (readFile(chosenCity, &gr)) {}
+    if (readFile(chosenCity, &gr)) {
+    	cout << "Read the file!" << endl;
+    }
     else {
         cout << "Pqp!\n";
     }

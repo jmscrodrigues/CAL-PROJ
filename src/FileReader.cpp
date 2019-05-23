@@ -1,4 +1,5 @@
 #include "FileReader.h"
+#include <iostream>
 
 bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::ifstream inputStream;
@@ -7,14 +8,16 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::vector<tempEdge> edges;
 
 
-    std::string folderPath = "maps/" + selectedLocation + "/";
-    std::string nodesFileName = folderPath + "T04_nodes_X_Y_" + selectedLocation + ".txt";
-    std::string edgesFileName = folderPath + "T04_edges_" + selectedLocation + ".txt";
-    std::string tagsFileName = folderPath + "T04_tags_" + selectedLocation + ".txt";
+    std::string folderPath = "maps/" + selectedLocation;
+    std::string nodesFileName = folderPath + "/T04_nodes_X_Y_" + selectedLocation + ".txt";
+    std::string edgesFileName = folderPath + "/T04_edges_" + selectedLocation + ".txt";
+    std::string tagsFileName = folderPath + "/T04_tags_" + selectedLocation + ".txt";
 
     //get nodes
     inputStream.open(nodesFileName);
-    if(!inputStream.is_open()){return false;}
+    if(!inputStream.is_open()){
+    	return false;
+    }
     std::string id, x, y;
     getline(inputStream, line); //number of nodes extracted
     while(getline(inputStream,line)){
@@ -50,6 +53,7 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
     }
     inputStream.close();
 
+
     //get edges
     inputStream.open(edgesFileName);
     if(!inputStream.is_open()){return false;}
@@ -69,6 +73,7 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
         }
     }
     inputStream.close();
+
 
     //push everything into the graph
     for(size_t i = 0; i < nodes.size(); i++){
