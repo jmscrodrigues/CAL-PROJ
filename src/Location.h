@@ -9,7 +9,6 @@ class Location{
     std::vector<std::string> tags;
 
 public:
-
     Location(int id, double x, double y);
     double getX() const;
     double getY() const;

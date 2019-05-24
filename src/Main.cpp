@@ -11,7 +11,7 @@ using namespace std;
 int main() {
     char nextProduct = 'y';
     int id, qtty, vol, nTrucks;
-    int city;
+    int city, iteration;
     vector<Product> products;
     string chosenCity;
 
@@ -76,6 +76,26 @@ int main() {
     }
     else {
         cout << "Pqp!\n";
+    }
+
+    while (iteration != 4) {
+    	cout << "\nWhat iteration do you want to test?(1 2 3 4)\n 1) One vehicle with unlimited capacity makes one delivery \n 2) One vehicle with unlimited capacity makes all the deliveries\n 3) The fleet of vehicles with limited capacity makes the deliveries\n 4) Exit" << endl;
+    	cin >> iteration;
+    	switch(iteration) {
+    		case 1:
+    			//FAZER DJIKSTRA PARA 1 VEICULO
+    		break;
+
+    		case 2:
+    			//FAZER FLOYD-WARSHALL PARA 1 VEICULO
+    			//BST
+    		break;
+
+    		case 3:
+    			//FAZER A FUNÇAO PARA DISTRIBUIÇAO DE AREAS
+    			//FAZER FLOYD-WARSHALL PARA TODOS OS VEICULOS
+    		break;
+    	}
     }
     return 0;
 }

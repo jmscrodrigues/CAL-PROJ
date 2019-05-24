@@ -31,10 +31,13 @@ class Vertex {
 	bool visited;          // auxiliary field used by dfs and bfs
 	bool processing;       // auxiliary field used by isDAG
 	int indegree;          // auxiliary field used by topsort
+	Vertex * path;
+	int weight;
 
 	void addEdge(Vertex<T> *dest, double w);
 	bool removeEdgeTo(Vertex<T> *d);
 public:
+	int queueIndex;
 	Vertex(T in);
 	friend class Graph<T>;
 };
@@ -69,7 +72,7 @@ public:
 	vector<T> topsort() const;
 	int maxNewChildren(const T &source, T &inf) const;
 	bool isDAG() const;
-	void dijkstraShortestPath(const T &origin);
+	void dijkstraShortestPath(const T &origin, const T &dest);
 	void unweightedShortestPath(const T &orig);
 	vector<T> getPath(const T &origin, const T &dest) const;
 	void floydWarshallShortestPath();
@@ -79,7 +82,7 @@ public:
 /****************** Provided constructors and functions ********************/
 
 template <class T>
-Vertex<T>::Vertex(T in): info(in) {}
+Vertex<T>::Vertex(T in): info(in), weight(0), queueIndex(0), path(NULL) {}
 
 template <class T>
 Edge<T>::Edge(Vertex<T> *d, double w): dest(d), weight(w) {}
@@ -394,7 +397,7 @@ bool Graph<T>::dfsIsDAG(Vertex<T> *v) const {
 }
 
 template<class T>
-void Graph<T>::dijkstraShortestPath(const T &origin) {
+void Graph<T>::dijkstraShortestPath(const T &origin, const T &dest) {
     for(Vertex<T>* v: this->vertexSet){
         v->visited = false;
         v->dist = INF;
@@ -419,7 +422,9 @@ void Graph<T>::dijkstraShortestPath(const T &origin) {
                 }
             }
         }
-
+        if (this->findVertex(dest) == v) {
+        	return;
+        }
     }
 }
 
