@@ -32,15 +32,18 @@ class Vertex {
 	bool processing;       // auxiliary field used by isDAG
 	int indegree;          // auxiliary field used by topsort
 	Vertex * path;
-	int weight;
+	double dist;
 
 	void addEdge(Vertex<T> *dest, double w);
 	bool removeEdgeTo(Vertex<T> *d);
 public:
 	int queueIndex;
+	double getDist();
 	Vertex(T in);
 	friend class Graph<T>;
 };
+template <class T>
+bool operator<(Vertex<T> v, Vertex<T> v2);
 
 template <class T>
 class Edge {
@@ -82,7 +85,7 @@ public:
 /****************** Provided constructors and functions ********************/
 
 template <class T>
-Vertex<T>::Vertex(T in): info(in), path(NULL), queueIndex(0), weight(0) {}
+Vertex<T>::Vertex(T in): info(in), path(NULL), queueIndex(0), dist(0) {}
 
 template <class T>
 Edge<T>::Edge(Vertex<T> *d, double w): dest(d), weight(w) {}
@@ -196,6 +199,16 @@ bool Graph<T>::removeVertex(const T &in) {
 			return true;
 		}
 	return false;
+}
+
+template<class T>
+double Vertex<T>::getDist() {
+	return this->dist;
+}
+
+template <class T>
+bool operator<(Vertex<T> v, Vertex<T> v2) {
+
 }
 
 
