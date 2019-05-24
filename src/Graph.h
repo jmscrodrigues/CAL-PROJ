@@ -82,7 +82,7 @@ public:
 /****************** Provided constructors and functions ********************/
 
 template <class T>
-Vertex<T>::Vertex(T in): info(in), weight(0), queueIndex(0), path(NULL) {}
+Vertex<T>::Vertex(T in): info(in), path(NULL), queueIndex(0), weight(0) {}
 
 template <class T>
 Edge<T>::Edge(Vertex<T> *d, double w): dest(d), weight(w) {}
@@ -422,9 +422,11 @@ void Graph<T>::dijkstraShortestPath(const T &origin, const T &dest) {
                 }
             }
         }
-        if (this->findVertex(dest) == v) {
+
+        if(v == this->findVertex(dest)) {
         	return;
         }
+
     }
 }
 
