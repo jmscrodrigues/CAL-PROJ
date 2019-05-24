@@ -83,15 +83,35 @@ int main() {
     	cin >> iteration;
     	switch(iteration) {
     		case 1:
-    			//FAZER DJIKSTRA PARA 1 VEICULO
-    		break;
+    			{
+    				double xCoordOr, yCoordOr, xCoordDest, yCoordDest;
+    				int orId,destId;
+    				cout << "Origin's id?\n";
+					cin >> orId;
+    				cout << "Origin's X coordinate?\n";
+    				cin >> xCoordOr;
+					cout << "Origin's Y coordinate?\n";
+					cin >> yCoordOr;
 
+					cout << "Destination's id?\n";
+					cin >> destId;
+					cout << "Destination's X coordinate?\n";
+					cin >> xCoordDest;
+					cout << "Destination's Y coordinate?\n";
+					cin >> yCoordDest;
+					Location orig = Location(orId,xCoordOr,yCoordOr);
+					Location dest = Location(destId,xCoordDest, yCoordDest);
+					gr.dijkstraShortestPath(orig, dest);
+					break;
+    			}
     		case 2:
+    			cout << "caso 2\n";
     			//FAZER FLOYD-WARSHALL PARA 1 VEICULO
     			//BST
     		break;
 
     		case 3:
+    			cout << "caso 3\n";
     			//FAZER A FUNÇAO PARA DISTRIBUIÇAO DE AREAS
     			//FAZER FLOYD-WARSHALL PARA TODOS OS VEICULOS
     		break;
