@@ -16,7 +16,7 @@ int Location::getID() const{
 }
 
 bool Location::checkIfHasTag(std::string tag) const{
-    for(int i = 0; i < (this->tags).size(); i++){
+    for(unsigned int i = 0; i < (this->tags).size(); i++){
         if((this->tags).at(i) == tag)
             return true;
     }

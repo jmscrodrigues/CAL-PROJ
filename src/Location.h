@@ -4,8 +4,9 @@
 #include <vector>
 
 class Location{
+	int id;
     double x, y;
-    int id, expectedDeliveries;
+    int expectedDeliveries;
     std::vector<std::string> tags;
 
 public:
