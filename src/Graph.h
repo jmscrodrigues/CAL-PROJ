@@ -4,6 +4,7 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
+#include <iostream>
 #include <vector>
 #include <queue>
 #include <iterator>
@@ -464,6 +465,8 @@ void Graph<T>::dijkstraShortestPath(const T &origin, const T &dest) {
         }
 
     }
+
+    queue.elements();
 }
 
 template<class T>

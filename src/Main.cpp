@@ -102,19 +102,44 @@ int main() {
 					Location orig = Location(orId,xCoordOr,yCoordOr);
 					Location dest = Location(destId,xCoordDest, yCoordDest);
 					gr.dijkstraShortestPath(orig, dest);
-					vector<Location> l = gr.getPath(orig, dest);
+					/*vector<Location> l = gr.getPath(orig, dest);
 					if(l.size() > 1){
 						for(unsigned int i = 0; i < l.size()-1; i++){
 							cout << l.at(i).getID() << " -> ";
 						}
 						cout << l.at(l.size()-1).getID();
-					}
+					}*/
 					break;
     			}
     		case 2:
+    		{
     			cout << "caso 2\n";
     			//FAZER FLOYD-WARSHALL PARA 1 VEICULO
-    			//BST
+    			//BSF
+    			double xCoordOr, yCoordOr, xCoordDest, yCoordDest;
+				int orId,destId;
+				cout << "Origin's id?\n";
+				cin >> orId;
+				cout << "Origin's X coordinate?\n";
+				cin >> xCoordOr;
+				cout << "Origin's Y coordinate?\n";
+				cin >> yCoordOr;
+
+				cout << "Destination's id?\n";
+				cin >> destId;
+				cout << "Destination's X coordinate?\n";
+				cin >> xCoordDest;
+				cout << "Destination's Y coordinate?\n";
+				cin >> yCoordDest;
+				Location orig1 = Location(orId,xCoordOr,yCoordOr);
+				Location dest1 = Location(destId,xCoordDest, yCoordDest);
+
+				gr.bfs(orig1);
+				//gr.floydWarshallShortestPath();
+				gr.getfloydWarshallPath(orig1,dest1);
+
+
+    		}
     		break;
 
     		case 3:
