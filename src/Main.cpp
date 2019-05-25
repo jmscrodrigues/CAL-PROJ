@@ -102,6 +102,13 @@ int main() {
 					Location orig = Location(orId,xCoordOr,yCoordOr);
 					Location dest = Location(destId,xCoordDest, yCoordDest);
 					gr.dijkstraShortestPath(orig, dest);
+					vector<Location> l = gr.getPath(orig, dest);
+					if(l.size() > 1){
+						for(unsigned int i = 0; i < l.size()-1; i++){
+							cout << l.at(i).getID() << " -> ";
+						}
+						cout << l.at(l.size()-1).getID();
+					}
 					break;
     			}
     		case 2:
