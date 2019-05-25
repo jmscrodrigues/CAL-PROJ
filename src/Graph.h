@@ -38,12 +38,18 @@ class Vertex {
 	bool removeEdgeTo(Vertex<T> *d);
 public:
 	int queueIndex;
+	T getInfo() const;
 	double getDist();
+	Vertex *getPath() const;
 	Vertex(T in);
 	friend class Graph<T>;
 };
+
 template <class T>
 bool operator<(Vertex<T> v, Vertex<T> v2);
+
+template <class T>
+bool operator!=(T v, T v2);
 
 template <class T>
 class Edge {
@@ -85,7 +91,7 @@ public:
 /****************** Provided constructors and functions ********************/
 
 template <class T>
-Vertex<T>::Vertex(T in): info(in), path(NULL), queueIndex(0), dist(0) {}
+Vertex<T>::Vertex(T in): info(in), path(NULL), dist(0) {}
 
 template <class T>
 Edge<T>::Edge(Vertex<T> *d, double w): dest(d), weight(w) {}
@@ -106,6 +112,17 @@ Vertex<T> * Graph<T>::findVertex(const T &in) const {
 			return v;
 	return NULL;
 }
+
+template <class T>
+T Vertex<T>::getInfo() const {
+	return this->info;
+}
+
+template <class T>
+Vertex<T> *Vertex<T>::getPath() const {
+	return this->path;
+}
+
 
 /****************** 1a) addVertex ********************/
 
@@ -206,9 +223,15 @@ double Vertex<T>::getDist() {
 	return this->dist;
 }
 
+
 template <class T>
 bool operator<(Vertex<T> v, Vertex<T> v2) {
+	return v.getDist() < v2.getDist();
+}
 
+template <class T>
+bool operator!=(T v, T v2) {
+	return v.getID() == v2.getID();
 }
 
 
