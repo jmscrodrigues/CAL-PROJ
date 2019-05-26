@@ -1,4 +1,5 @@
 #include "FileReader.h"
+#include "graphviewer.h"
 #include <iostream>
 
 bool readFile(std::string selectedLocation, Graph<Location> * graph){
@@ -6,6 +7,7 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::string line;
     std::vector<Location> nodes;
     std::vector<tempEdge> edges;
+    graph->gv = GraphViewer(600,600,false);
 
 
     std::string folderPath = "maps/" + selectedLocation;
@@ -27,6 +29,8 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
         x = line.substr(firstComma+2, secondComma);
         y = line.substr(secondComma+2, line.find(')'));
         nodes.push_back(Location(std::stoi(id), std::stod(x), std::stod(y)));
+        graph->gv->addNode(std::stoi(id), std::stod(x), std::stod(y));
+        graph->gv->rearrange();
     }
     inputStream.close();
 
@@ -60,7 +64,8 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::string originNode, destNode;
     getline(inputStream, line); //number of edges extracted
     while(getline(inputStream,line)){
-        originNode = line.substr(1, line.find(','));
+        int id = 0;
+    	originNode = line.substr(1, line.find(','));
         destNode = line.substr(line.find(' ')+1, line.find(')'));
         Location tempOriginLoc(std::stoi(originNode),0,0);
         Location tempDestLoc(std::stoi(destNode),0,0);
@@ -70,7 +75,10 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
         	Location l1 = *originLoc;
         	Location l2 = *destLoc;
         	edges.push_back(tempEdge(l1, l2));
+        	graph->gv->addEdge(id,l1.getID(),l2.getID(),EdgeType::UNDIRECTED);
+        	graph->gv->rearrange();
         }
+        id++;
     }
     inputStream.close();
 
