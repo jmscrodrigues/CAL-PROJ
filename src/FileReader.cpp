@@ -7,7 +7,7 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::string line;
     std::vector<Location> nodes;
     std::vector<tempEdge> edges;
-    graph->gv = GraphViewer(600,600,false);
+    graph->gv = new GraphViewer(600,600,false);
 
 
     std::string folderPath = "maps/" + selectedLocation;
