@@ -3,14 +3,18 @@
 #include <iostream>
 
 static int idEdge = 0;
+static int firstX;
+static int firstY;
 
 bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::ifstream inputStream;
     std::string line;
     std::vector<Location> nodes;
     std::vector<tempEdge> edges;
+    int first = 0;
+
     graph->gv = new GraphViewer(600,600,false);
-    graph->gv->setBackground("background.jpg");
+    //graph->gv->setBackground("background.jpg");
 
     graph->gv->createWindow(600, 600);
 
@@ -37,8 +41,14 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
         id = line.substr(1, firstComma);
         x = line.substr(firstComma+2, secondComma);
         y = line.substr(secondComma+2, line.find(')'));
+
+        if (first == 0) {
+        	firstX = std::stod(x);
+        	firstY = std::stod(y);
+        	first = 1;
+        }
         nodes.push_back(Location(std::stoi(id), std::stod(x), std::stod(y)));
-        graph->gv->addNode(std::stoi(id), std::stod(x), std::stod(y));
+        graph->gv->addNode(std::stoi(id), std::stod(x)- firstX, std::stod(y) - firstY);
     }
     inputStream.close();
 
