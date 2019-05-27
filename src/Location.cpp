@@ -33,3 +33,21 @@ bool operator==(const Location& lhs, const Location& rhs){
     else
         return false;
 }
+
+double getDistBetweenLocations(const Location origin, const Location dest){
+	double result = sqrt(pow((origin.getX()- dest.getX()), 2) + pow((origin.getY() - dest.getY()), 2));
+	return result;
+}
+
+int findClosestLocation(Location origin, std::vector<Location> destinations){
+	double dist = getDistBetweenLocations(origin, destinations.at(0));
+	int closestLocationIndex = 0;
+	for(int i = 0; i < destinations.size(); i++){
+		if(getDistBetweenLocations(origin, destinations.at(i)) < dist){
+			dist = getDistBetweenLocations(origin, destinations.at(i));
+			closestLocationIndex = i;
+		}
+	}
+	return closestLocationIndex;
+}
+

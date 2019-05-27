@@ -13,6 +13,7 @@
 #include <limits>
 #include <cmath>
 #include "MutablePriorityQueue.h"
+#include "Location.h"
 
 using namespace std;
 
@@ -87,6 +88,7 @@ public:
 	vector<T> getPath(const T &origin, const T &dest) const;
 	void floydWarshallShortestPath();
 	vector<T> getfloydWarshallPath(const T &orig, const T &dest) const;
+	vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vector<T> deliveryPoints);
 };
 
 /****************** Provided constructors and functions ********************/
@@ -571,6 +573,31 @@ vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	}
 	return res;
 }
+
+template <class T>
+vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vector<T> deliveryPoints){
+	vector<T> result;
+	Location currentVertexL = (Location) origin;
+	T currentVertexT = origin;
+	vector<Location> delPL;
+	for(int i = 0; i < deliveryPoints.size(); i++){
+		delPL.push_back((Location) deliveryPoints.at(i));
+	}
+	while(!deliveryPoints.empty()){
+		int i = findClosestLocation(currentVertexL, delPL);
+		vector<T> temp = getfloydWarshallPath(currentVertexT, deliveryPoints.at(i));
+		result.insert(result.end(), temp.begin(), temp.end());
+		currentVertexL = delPL.at(i);
+		currentVertexT = deliveryPoints.at(i);
+		delPL.erase(delPL.begin() + i);
+		deliveryPoints.erase(deliveryPoints.begin() + i);
+	}
+	vector<T> temp = getfloydWarshallPath(currentVertexT, dest);
+	result.insert(result.end(), temp.begin(), temp.end());
+
+	return result;
+}
+
 
 
 #endif /* GRAPH_H_ */
