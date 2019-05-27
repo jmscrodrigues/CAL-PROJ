@@ -144,10 +144,20 @@ int main() {
 				Location orig1 = Location(orId,xCoordOr,yCoordOr);
 				Location dest1 = Location(destId,xCoordDest, yCoordDest);
 
-				gr.bfs(orig1);
+				vector<Location> deliveryPoints = gr.bfs(orig1);
+				vector<Location>::iterator it = deliveryPoints.begin();
+				while(it != deliveryPoints.end()){
+					if(!(it->checkIfHasTag("shop")))
+						deliveryPoints.erase(it);
+					it++;
+				}
 				//gr.floydWarshallShortestPath();
-				gr.getfloydWarshallPath(orig1,dest1);
-
+				//gr.getfloydWarshallPath(orig1,dest1);
+				vector<Location> result = gr.getSingleDeliveryPath(orig1, dest1, deliveryPoints);
+				for(int i = 0; i < result.size(); i++)
+				{
+					cout << result.at(i).getID() << " -> ";
+				}
 
     		}
     		break;

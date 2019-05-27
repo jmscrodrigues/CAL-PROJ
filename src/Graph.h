@@ -91,7 +91,7 @@ public:
 	vector<T> getPath(const T &origin, const T &dest) const;
 	void floydWarshallShortestPath();
 	vector<T> getfloydWarshallPath(const T &orig, const T &dest) const;
-	//vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vector<T> deliveryPoints);
+	vector<T> getSingleDeliveryPath(const T & origin, const T & dest, vector<T> deliveryPoints);
 };
 
 /****************** Provided constructors and functions ********************/
@@ -576,7 +576,7 @@ vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	}
 	return res;
 }
-/*
+
 template <class T>
 vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vector<T> deliveryPoints){
 	vector<T> result;
@@ -600,7 +600,7 @@ vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vect
 
 	return result;
 }
-*/
+
 
 
 #endif /* GRAPH_H_ */
