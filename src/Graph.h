@@ -75,6 +75,7 @@ class Graph {
 	bool dfsIsDAG(Vertex<T> *v) const;
 public:
 	vector<Vertex<T> *> vertexSet;
+	vector<int> Ids;
 	GraphViewer * gv;
 	int getNumVertex() const;
 	bool addVertex(const T &in);
@@ -141,6 +142,7 @@ bool Graph<T>::addVertex(const T &in) {
 	if ( findVertex(in) != NULL)
 		return false;
 	vertexSet.push_back(new Vertex<T>(in));
+	Ids.push_back(in.getID());
 	return true;
 }
 

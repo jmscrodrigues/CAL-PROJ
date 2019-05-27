@@ -86,12 +86,30 @@ int main() {
     			{
     				double xCoordOr, yCoordOr, xCoordDest, yCoordDest;
     				int orId,destId;
+    				bool orig = false, destin = false;
 
     				cout << "Origin's id?\n";
 					cin >> orId;
 
 					cout << "Destination's id?\n";
 					cin >> destId;
+
+					for(unsigned int i = 0; i < gr.Ids.size();i++) {
+						if (gr.Ids[i] == orId) {
+							orig = true;
+						}
+					}
+
+					for(unsigned int t = 0; t < gr.Ids.size();t++) {
+						if (gr.Ids[t] == destId) {
+							destin = true;
+						}
+					}
+
+					if ((orig != true) || (destin != true)) {
+						cout << "Wrong id's\n";
+						break;
+					}
 
 
 					for (auto v : gr.vertexSet) {
@@ -107,10 +125,10 @@ int main() {
 						}
 					}
 
-					Location orig = Location(orId,xCoordOr,yCoordOr);
-					Location dest = Location(destId,xCoordDest, yCoordDest);
-					gr.dijkstraShortestPath(orig, dest);
-					vector<Location> l = gr.getPath(orig, dest);
+					Location origLoc = Location(orId,xCoordOr,yCoordOr);
+					Location destLoc = Location(destId,xCoordDest, yCoordDest);
+					gr.dijkstraShortestPath(origLoc, destLoc);
+					vector<Location> l = gr.getPath(origLoc, destLoc);
 					if(l.size() > 1){
 						for(unsigned int i = 0; i < l.size()-1; i++){
 							cout << l.at(i).getID() << " -> ";
