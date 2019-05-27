@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <cmath>
 
 class Location{
 	int id;
@@ -20,3 +21,7 @@ public:
 };
 
 bool operator==(const Location& lhs, const Location& rhs);
+
+double getDistBetweenLocations(const Location origin, const Location dest);
+
+int findClosestLocation(Location origin, vector<Location> destinations);
