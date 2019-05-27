@@ -95,28 +95,29 @@ int main() {
 
 
 					for (auto v : gr.vertexSet) {
-						if (v->info.getID() == orId) {
-							xCoordOr = v->info.getX();
-							yCoordOr = v->info.getY();
+						if (v->getInfo().getID() == orId) {
+							xCoordOr = v->getInfo().getX();
+							yCoordOr = v->getInfo().getY();
 						}
 					}
 					for (auto v : gr.vertexSet) {
-						if (v->info.getID() == destId) {
-							xCoordDest = v->info.getX();
-							yCoordDest = v->info.getY();
+						if (v->getInfo().getID() == destId) {
+							xCoordDest = v->getInfo().getX();
+							yCoordDest = v->getInfo().getY();
 						}
 					}
 
 					Location orig = Location(orId,xCoordOr,yCoordOr);
 					Location dest = Location(destId,xCoordDest, yCoordDest);
 					gr.dijkstraShortestPath(orig, dest);
-					/*vector<Location> l = gr.getPath(orig, dest);
+					vector<Location> l = gr.getPath(orig, dest);
 					if(l.size() > 1){
 						for(unsigned int i = 0; i < l.size()-1; i++){
 							cout << l.at(i).getID() << " -> ";
 						}
 						cout << l.at(l.size()-1).getID();
-					}*/
+					}
+					else cout << "Error?\n";
 
 					break;
     			}

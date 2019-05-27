@@ -66,7 +66,6 @@ public:
 
 template <class T>
 class Graph {
-	vector<Vertex<T> *> vertexSet;    // vertex set
 	vector<vector<double>> minDist;
 	vector<vector<Vertex<T>*>> next;
 
@@ -75,6 +74,7 @@ class Graph {
 	Vertex<T> *findVertex(const T &in) const;
 	bool dfsIsDAG(Vertex<T> *v) const;
 public:
+	vector<Vertex<T> *> vertexSet;
 	GraphViewer * gv;
 	int getNumVertex() const;
 	bool addVertex(const T &in);
@@ -91,7 +91,7 @@ public:
 	vector<T> getPath(const T &origin, const T &dest) const;
 	void floydWarshallShortestPath();
 	vector<T> getfloydWarshallPath(const T &orig, const T &dest) const;
-	vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vector<T> deliveryPoints);
+	//vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vector<T> deliveryPoints);
 };
 
 /****************** Provided constructors and functions ********************/
@@ -576,7 +576,7 @@ vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	}
 	return res;
 }
-
+/*
 template <class T>
 vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vector<T> deliveryPoints){
 	vector<T> result;
@@ -600,7 +600,7 @@ vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vect
 
 	return result;
 }
-
+*/
 
 
 #endif /* GRAPH_H_ */

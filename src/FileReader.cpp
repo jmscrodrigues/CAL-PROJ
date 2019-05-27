@@ -40,15 +40,6 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
     while(getline(inputStream,line)){
 
     	sscanf(line.c_str(), "(%d,%lf,%lf)", &idN,&xN,&yN);
-        /*size_t firstComma = line.find(',');
-        size_t secondComma = line.find(',', firstComma +1);
-        id = line.substr(1, firstComma);
-        x = line.substr(firstComma+2, secondComma);
-        xN = std::stod(x);
-        y = line.substr(secondComma+2, line.find(')'));
-        yN = std::stod(y);
-        idN = std::stoi(id);
-*/
         if (first == 0) {
         	firstX = xN;
         	firstY = yN;
@@ -63,10 +54,6 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
         }
 
         nodes.push_back(Location(idN, xN, yN));
-        cout << "FirstY:" << firstY << "\n";
-        cout << "FirstX:" << firstX << "\n";
-        cout << "xY - FirstY:" << yN - firstY << "\n";
-        cout << "xN - FirstX:" << xN - firstX << "\n";
         graph->gv->addNode(idN, xN - firstX, yN - firstY);
         graph->gv->rearrange();
     }
