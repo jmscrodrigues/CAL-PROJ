@@ -148,25 +148,71 @@ int main() {
     			cout << "caso 2\n";
     			//FAZER FLOYD-WARSHALL PARA 1 VEICULO
     			//BSF
-    			double xCoordOr, yCoordOr, xCoordDest, yCoordDest;
-				int orId,destId;
+    			int numb;
+				int orId;
+				bool ret;
+				double xCoord, yCoord;
+
 				cout << "Origin's id?\n";
 				cin >> orId;
-				cout << "Origin's X coordinate?\n";
-				cin >> xCoordOr;
-				cout << "Origin's Y coordinate?\n";
-				cin >> yCoordOr;
 
-				cout << "Destination's id?\n";
-				cin >> destId;
-				cout << "Destination's X coordinate?\n";
-				cin >> xCoordDest;
-				cout << "Destination's Y coordinate?\n";
-				cin >> yCoordDest;
-				Location orig1 = Location(orId,xCoordOr,yCoordOr);
-				Location dest1 = Location(destId,xCoordDest, yCoordDest);
+				cout << "Number of destinations? \n";
+				cin >> numb;
 
-				vector<Location> deliveryPoints = gr.bfs(orig1);
+				vector<int> idDest;
+				vector<bool> valid;
+
+				int idD;
+				for (int i = 1; i <= numb; i++) {
+
+					cout << "Destination " << i << "id? \n";
+					cin >> idD;
+					idDest.push_back(idD);
+					valid.push_back(false);
+				}
+
+				for (int t = 0; t < idDest.size(); t++) {
+					for(unsigned int j = 0; j < gr.Ids.size();j++) {
+						if (gr.Ids[t] == idDest[t]) {
+							valid[t] = true;
+						}
+					}
+				}
+
+				for (int t = 0; t < valid.size(); t++)
+				{
+					if (valid[t] == false) {
+						ret = true;
+						break;
+					}
+				}
+
+				if (ret) {
+					break;
+				}
+
+				vector<Location> locations;
+
+				for (int t = 0; t < idDest.size(); t++) {
+					for (auto v : gr.vertexSet) {
+						if (v->getInfo().getID() == idDest[t]) {
+							xCoord = v->getInfo().getX();
+							yCoord = v->getInfo().getY();
+							locations.push_back(Location(idDest[t],xCoord,yCoord));
+						}
+					}
+				}
+
+				for (auto v : gr.vertexSet) {
+					if (v->getInfo().getID() == orId) {
+						xCoord = v->getInfo().getX();
+						yCoord = v->getInfo().getY();
+						Location origLoc = Location(orId,xCoord,yCoord);
+					}
+				}
+
+
+				vector<Location> deliveryPoints = gr.bfs(origLoc);
 				vector<Location>::iterator it = deliveryPoints.begin();
 				while(it != deliveryPoints.end()){
 					if(!(it->checkIfHasTag("shop")))

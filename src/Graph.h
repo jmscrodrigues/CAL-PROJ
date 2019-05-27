@@ -490,7 +490,6 @@ vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
 			v = v->getPath();
 		}
 	}
-	// (v->getInfo()) != origin
 	res.push_back(v->getInfo());
 	reverse(res.begin(), res.end());
 	return res;
