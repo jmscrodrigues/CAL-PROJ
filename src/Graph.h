@@ -480,10 +480,17 @@ template<class T>
 vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
 	vector<T> res;
 	Vertex<T> * v = this->findVertex(dest);
-	while ((v->getInfo()) != origin){
-		res.push_back(v->getInfo());
-		v = v->getPath();
+	cout << v->getInfo().getID() << "\n";
+	while (true){
+		if (v->getInfo().getID() == origin.getID()) {
+			break;
+		}
+		else {
+			res.push_back(v->getInfo());
+			v = v->getPath();
+		}
 	}
+	// (v->getInfo()) != origin
 	res.push_back(v->getInfo());
 	reverse(res.begin(), res.end());
 	return res;

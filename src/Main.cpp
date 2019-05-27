@@ -115,13 +115,17 @@ int main() {
 					for (auto v : gr.vertexSet) {
 						if (v->getInfo().getID() == orId) {
 							xCoordOr = v->getInfo().getX();
+							cout << v->getInfo().getX() << "\n";
 							yCoordOr = v->getInfo().getY();
+							cout << v->getInfo().getY() << "\n";
 						}
 					}
 					for (auto v : gr.vertexSet) {
 						if (v->getInfo().getID() == destId) {
 							xCoordDest = v->getInfo().getX();
+							cout << v->getInfo().getX() << "\n";
 							yCoordDest = v->getInfo().getY();
+							cout << v->getInfo().getY() << "\n";
 						}
 					}
 
