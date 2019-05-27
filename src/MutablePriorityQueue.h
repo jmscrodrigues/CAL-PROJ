@@ -116,7 +116,7 @@ void MutablePriorityQueue<T>::elements()
 {
 	for(unsigned int i = 0; i < H.size(); i++)
 	{
-		cout << this->H.at(i) << endl;
+		//std::cout << this->H.at(i) << endl;
 	}
 }
 

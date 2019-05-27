@@ -86,19 +86,27 @@ int main() {
     			{
     				double xCoordOr, yCoordOr, xCoordDest, yCoordDest;
     				int orId,destId;
+
     				cout << "Origin's id?\n";
 					cin >> orId;
-    				cout << "Origin's X coordinate?\n";
-    				cin >> xCoordOr;
-					cout << "Origin's Y coordinate?\n";
-					cin >> yCoordOr;
 
 					cout << "Destination's id?\n";
 					cin >> destId;
-					cout << "Destination's X coordinate?\n";
-					cin >> xCoordDest;
-					cout << "Destination's Y coordinate?\n";
-					cin >> yCoordDest;
+
+
+					for (auto v : gr.vertexSet) {
+						if (v->info.getID() == orId) {
+							xCoordOr = v->info.getX();
+							yCoordOr = v->info.getY();
+						}
+					}
+					for (auto v : gr.vertexSet) {
+						if (v->info.getID() == destId) {
+							xCoordDest = v->info.getX();
+							yCoordDest = v->info.getY();
+						}
+					}
+
 					Location orig = Location(orId,xCoordOr,yCoordOr);
 					Location dest = Location(destId,xCoordDest, yCoordDest);
 					gr.dijkstraShortestPath(orig, dest);
@@ -109,6 +117,7 @@ int main() {
 						}
 						cout << l.at(l.size()-1).getID();
 					}*/
+
 					break;
     			}
     		case 2:

@@ -1,11 +1,26 @@
 #include "FileReader.h"
+#include "graphviewer.h"
 #include <iostream>
+
+static int idEdge = 0;
 
 bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::ifstream inputStream;
     std::string line;
     std::vector<Location> nodes;
     std::vector<tempEdge> edges;
+    int first = 0;
+    double firstY;
+    double firstX;
+
+    graph->gv = new GraphViewer(1800,1900,false);
+    //graph->gv->setBackground("background.jpg");
+
+    graph->gv->createWindow(600, 600);
+
+
+    graph->gv->defineVertexColor("blue");
+    graph->gv->defineEdgeColor("black");
 
 
     std::string folderPath = "maps/" + selectedLocation;
@@ -19,15 +34,43 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
     	return false;
     }
     std::string id, x, y;
-    getline(inputStream, line); //number of nodes extracted
+    double xN, yN;
+    int idN;
+    getline(inputStream, id); //number of nodes extracted
     while(getline(inputStream,line)){
-        size_t firstComma = line.find(',');
-        size_t secondComma = line.find(',', firstComma);
+
+    	sscanf(line.c_str(), "(%d,%lf,%lf)", &idN,&xN,&yN);
+        /*size_t firstComma = line.find(',');
+        size_t secondComma = line.find(',', firstComma +1);
         id = line.substr(1, firstComma);
         x = line.substr(firstComma+2, secondComma);
+        xN = std::stod(x);
         y = line.substr(secondComma+2, line.find(')'));
-        nodes.push_back(Location(std::stoi(id), std::stod(x), std::stod(y)));
+        yN = std::stod(y);
+        idN = std::stoi(id);
+*/
+        if (first == 0) {
+        	firstX = xN;
+        	firstY = yN;
+        	first = 1;
+        }
+
+        if((xN < firstX)) {
+        	firstX = xN;
+        }
+        if(yN < firstY)  {
+        	firstY = yN;
+        }
+
+        nodes.push_back(Location(idN, xN, yN));
+        cout << "FirstY:" << firstY << "\n";
+        cout << "FirstX:" << firstX << "\n";
+        cout << "xY - FirstY:" << yN - firstY << "\n";
+        cout << "xN - FirstX:" << xN - firstX << "\n";
+        graph->gv->addNode(idN, xN - firstX, yN - firstY);
+        graph->gv->rearrange();
     }
+   // graph->gv->rearrange();
     inputStream.close();
 
     //get node tags and tag nodes
@@ -60,7 +103,7 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
     std::string originNode, destNode;
     getline(inputStream, line); //number of edges extracted
     while(getline(inputStream,line)){
-        originNode = line.substr(1, line.find(','));
+    	originNode = line.substr(1, line.find(','));
         destNode = line.substr(line.find(' ')+1, line.find(')'));
         Location tempOriginLoc(std::stoi(originNode),0,0);
         Location tempDestLoc(std::stoi(destNode),0,0);
@@ -70,9 +113,13 @@ bool readFile(std::string selectedLocation, Graph<Location> * graph){
         	Location l1 = *originLoc;
         	Location l2 = *destLoc;
         	edges.push_back(tempEdge(l1, l2));
+        	edges.push_back(tempEdge(l2, l1));
+        	graph->gv->addEdge(idEdge,l1.getID(),l2.getID(),EdgeType::UNDIRECTED);
+        	idEdge++;
         }
     }
     inputStream.close();
+    graph->gv->rearrange();
 
 
     //push everything into the graph

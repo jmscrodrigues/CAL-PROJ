@@ -14,6 +14,7 @@
 #include <cmath>
 #include "MutablePriorityQueue.h"
 #include "Location.h"
+#include "graphviewer.h"
 
 using namespace std;
 
@@ -69,10 +70,12 @@ class Graph {
 	vector<vector<double>> minDist;
 	vector<vector<Vertex<T>*>> next;
 
+
 	void dfsVisit(Vertex<T> *v,  vector<T> & res) const;
 	Vertex<T> *findVertex(const T &in) const;
 	bool dfsIsDAG(Vertex<T> *v) const;
 public:
+	GraphViewer * gv;
 	int getNumVertex() const;
 	bool addVertex(const T &in);
 	bool removeVertex(const T &in);
