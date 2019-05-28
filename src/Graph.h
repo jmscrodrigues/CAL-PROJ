@@ -598,6 +598,8 @@ vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vect
 	while(!deliveryPoints.empty() && !delPL.empty()){
 		int i = findClosestLocation(currentVertexL, delPL);
 		cout << "found closest" << endl;
+		T tempvert = deliveryPoints.at(i);
+		cout << "definitely floydWarshall's fault" << endl;
 		vector<T> temp = getfloydWarshallPath(currentVertexT, deliveryPoints.at(i));
 		cout << "got floydWarshall" << endl;
 		result.insert(result.end(), temp.begin(), temp.end());
