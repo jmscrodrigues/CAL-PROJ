@@ -150,7 +150,7 @@ int main() {
     			//BSF
     			int numb;
 				int orId, garId;
-				bool ret;
+				bool ret = false;
 				double xCoord, yCoord;
 				bool orig = false, destin = false;
 
@@ -175,7 +175,7 @@ int main() {
 					valid.push_back(false);
 				}
 
-				for (int t = 0; t < idDest.size(); t++) {
+				for (unsigned int t = 0; t < idDest.size(); t++) {
 					for(unsigned int j = 0; j < gr.Ids.size();j++) {
 						if (gr.Ids[j] == idDest[t]) {
 							cout << "SAW ONE\n";
@@ -184,17 +184,19 @@ int main() {
 					}
 				}
 
-				for (int t = 0; t < valid.size(); t++)
+				for (unsigned int k = 0; k < valid.size(); k++)
 				{
 					cout << "Checking if there's no wrong id's\n";
-					if (valid[t] == false) {
+					if (valid[k] == false) {
+						cout << k << endl;
+						cout << idDest[k] << endl;
 						ret = true;
 						break;
 					}
 				}
 
 				if (ret) {
-					cout << "Wrong id's\n";
+					cout << "Wrong id's no 1\n";
 					break;
 				}
 
@@ -214,14 +216,14 @@ int main() {
 				}
 
 				if ((orig != true) || (destin != true)) {
-					cout << "Wrong id's\n";
+					cout << "Wrong id's no 2\n";
 					break;
 				}
 
 				cout << "GOT HERE\n";
 				vector<Location> locations;
 
-				for (int t = 0; t < idDest.size(); t++) {
+				for (size_t t = 0; t < idDest.size(); t++) {
 					for (auto v : gr.vertexSet) {
 						if (v->getInfo().getID() == idDest[t]) {
 							xCoord = v->getInfo().getX();
@@ -270,24 +272,17 @@ int main() {
 						it++;
 				}
 
-				for (size_t i = 0; i < locations.size(); i++) {
-					if (find(deliveryPoints.begin(), deliveryPoints.end(), locations[i]) == deliveryPoints.end()) {
-						locations.erase(locations.begin() + i);
-						i--;
-					}
-				}
+				cout << "É da delivery ? \n";
 
-				//gr.floydWarshallShortestPath();
-				//gr.getfloydWarshallPath(orig1,dest1);
 				vector<Location> result = gr.getSingleDeliveryPath(origL, garage, locations);
-
-				for(int i = 0; i < result.size(); i++)
+/*
+				for(size_t i = 0; i < result.size(); i++)
 				{
 					cout << result.at(i).getID() << " -> ";
-				}
-
+				}*/
+				break;
     		}
-    		break;
+
 
     		case 3:
     			cout << "caso 3\n";
