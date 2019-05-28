@@ -594,7 +594,7 @@ vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vect
 	for(int i = 0; i < deliveryPoints.size(); i++){
 		delPL.push_back((Location) deliveryPoints.at(i));
 	}
-	while(!deliveryPoints.empty()){
+	while(!deliveryPoints.empty() && !delPL.empty()){
 		int i = findClosestLocation(currentVertexL, delPL);
 		vector<T> temp = getfloydWarshallPath(currentVertexT, deliveryPoints.at(i));
 		result.insert(result.end(), temp.begin(), temp.end());
