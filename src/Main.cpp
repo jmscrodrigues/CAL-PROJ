@@ -10,7 +10,7 @@ using namespace std;
 
 int main() {
     char nextProduct = 'y';
-    int id, qtty, vol, nTrucks;
+    int id, qtty, vol;
     int city, iteration;
     vector<Product> products;
     string chosenCity;
@@ -23,8 +23,7 @@ int main() {
         cout << "Are there any more products? (y or n)\n";
         cin >> nextProduct;
     }
-    cout << "What's the number of delivery trucks?" << endl;
-    cin >> nTrucks;
+
 
     cout << "What's the city you want to choose (1 - 10)?\n 1) Aveiro \n 2) Braga \n 3) Coimbra \n 4) Ermesinde \n 5) Fafe \n 6) Gondomar \n 7) Lisboa \n 8) Maia \n 9) Porto \n 10) Viseu \n";
     cin >> city;
@@ -287,20 +286,6 @@ int main() {
 
 				cout << "Got here 4\n";
 
-/*
-				vector<Location> deliveryPoints = gr.bfs(origL);
-				vector<Location>::iterator it = deliveryPoints.begin();
-				while(it != deliveryPoints.end()){
-					if(!(it->checkIfHasTag("shop")))
-						it = deliveryPoints.erase(it);
-					else
-						it++;
-				}
-*/
-
-
-				//cout << "É da delivery ? \n";
-
 				vector<Location> result;
 				size_t minSize = INT_MAX;
 				Location minLocation = Location(0,0,0);
@@ -351,167 +336,216 @@ int main() {
 
     		case 3:
     		{
-				int numb;
-				int orId;
-				bool ret = false;
-				double xCoord, yCoord;
-				bool orig = false;
+			cout << "caso 2\n";
+			//FAZER FLOYD-WARSHALL PARA 1 VEICULO
+			//BSF
+			int numb;
+			int orId;
+			bool ret = false;
+			double xCoord, yCoord;
+			bool orig = false;
+			int numTr;
+			int maxCargo;
+			bool end = true;
 
-				cout << "Origin's id?\n";
-				cin >> orId;
+			cout << "Origin's id?\n";
+			cin >> orId;
 
-				cout << "Number of destinations? \n";
-				cin >> numb;
+			cout << "Number of trucks of the fleet?\n";
+			cin >> numTr;
 
-				vector<int> idDest;
-				vector <bool> valid;
+			cout << "Max cargo of each truck? \n";
+			cin >> maxCargo;
 
-				int idD;
-				for (int i = 1; i <= numb; i++) {
+			cout << "Number of destinations? \n";
+			cin >> numb;
 
-					cout << "Destination " << i << " id? \n";
-					cin >> idD;
+			vector<int> idDest;
+			vector <bool> valid;
 
-					idDest.push_back(idD);
+			int idD;
+			for (int i = 1; i <= numb; i++) {
+
+				cout << "Destination " << i << " id? \n";
+				cin >> idD;
+				idDest.push_back(idD);
+				for(unsigned int j = 0; j < gr.Ids.size();j++) {
+					if (gr.Ids[j] == idD) {
+						ret = true;
+						break;
+					}
+				}
+				valid.push_back(ret);
+				ret = false;
+			}
+
+			int carga;
+
+			for(unsigned int i = 0; i < products.size();i++)
+			{
+				carga += products.at(i).getQuantity() * products.at(i).getVolume();
+			}
+
+			if (maxCargo * numTr < carga) {
+				end = false;
+				carga -= (maxCargo * numTr);
+			}
+
+			cout << "IM HERE \n";
+			cout << idDest.size()<< endl;
+			for (unsigned int k = 0; k < valid.size(); k++) {
+				cout << valid[k] << endl;
+			}
+
+
+			for(unsigned int i = 0; i < gr.Ids.size();i++) {
+				if (gr.Ids[i] == orId) {
+					orig = true;
+				}
+			}
+
+			if (orig != true) {
+				cout << "Wrong id's no 2\n";
+				break;
+			}
+
+			cout << "GOT HERE" << endl;
+
+			if (idDest.size() != 1) {
+				for (unsigned int t = 0; t < idDest.size(); t++) {
+					cout << idDest[t] << endl;
 					for(unsigned int j = 0; j < gr.Ids.size();j++) {
-						if (gr.Ids[j] == idD) {
-							ret = true;
+						cout << "Testing \n";
+						if (gr.Ids[j] == idDest[t]) {
+							//ret = false;
+							valid[t] = false;
 							break;
 						}
 					}
-					valid.push_back(ret);
-					ret = false;
 				}
-
-				cout << "IM HERE \n";
-				cout << idDest.size()<< endl;
 				for (unsigned int k = 0; k < valid.size(); k++) {
-					cout << valid[k] << endl;
-				}
-
-
-				for(unsigned int i = 0; i < gr.Ids.size();i++) {
-					if (gr.Ids[i] == orId) {
-						orig = true;
+					if (valid[k] == true) {
+						ret = true;
+						break;
 					}
 				}
+			}
 
-				if (orig != true) {
-					cout << "Wrong id's no 2\n";
-					break;
-				}
-
-				cout << "GOT HERE" << endl;
-
-				if (idDest.size() != 1) {
-					for (unsigned int t = 0; t < idDest.size(); t++) {
-						cout << idDest[t] << endl;
-						for(unsigned int j = 0; j < gr.Ids.size();j++) {
-							cout << "Testing \n";
-							if (idDest[t] == gr.Ids[j]) {
-								valid[t] = false;
-								break;
-							}
-						}
-					}
-					for (unsigned int k = 0; k < valid.size(); k++) {
-						if (valid[k] == true) {
-							ret = true;
-							break;
-						}
+			else {
+				ret = true;
+				for (unsigned int k = 0; k < gr.Ids.size(); k++) {
+					if (gr.Ids[k] == idD) {
+						cout << "AGORA DÁ\n";
+						ret = false;
 					}
 				}
-
-				else {
-					ret = true;
-					for (unsigned int k = 0; k < gr.Ids.size(); k++) {
-						if (gr.Ids[k] == idD) {
-							cout << "AGORA DÁ\n";
-							ret = false;
-						}
-					}
-				}
+			}
 
 
-				if (ret) {
-					cout << "Wrong id's no 1\n";
-					break;
-				}
+			if (ret) {
+				cout << "Wrong id's no 1\n";
+				break;
+			}
 
-				cout << "GOT HERE\n";
-				vector<Location> locations;
+			cout << "GOT HERE\n";
+			vector<Location> locations;
 
-				for (size_t t = 0; t < idDest.size(); t++) {
-					for (auto v : gr.vertexSet) {
-						if (v->getInfo().getID() == idDest[t]) {
-							xCoord = v->getInfo().getX();
-							yCoord = v->getInfo().getY();
-							locations.push_back(Location(idDest[t],xCoord,yCoord));
-						}
-					}
-				}
-
+			for (size_t t = 0; t < idDest.size(); t++) {
 				for (auto v : gr.vertexSet) {
-					if (v->getInfo().getID() == orId) {
+					if (v->getInfo().getID() == idDest[t]) {
 						xCoord = v->getInfo().getX();
 						yCoord = v->getInfo().getY();
+						locations.push_back(Location(idDest[t],xCoord,yCoord));
 					}
 				}
+			}
 
-				cout << "Got here 2 \n";
+			for (auto v : gr.vertexSet) {
+				if (v->getInfo().getID() == orId) {
+					xCoord = v->getInfo().getX();
+					yCoord = v->getInfo().getY();
+				}
+			}
 
-				Location origL = Location(orId,xCoord,yCoord);
+			cout << "Got here 2 \n";
 
-				cout << "Got here 3 \n";
+			Location origL = Location(orId,xCoord,yCoord);
 
-				cout << "Got here 4\n";
+			cout << "Got here 4\n";
+
+			vector<Location> result;
+			size_t minSize = INT_MAX;
+			Location minLocation = Location(0,0,0);
+			int index;
+			vector<Location> l;
+
+			cout << "Got here\n";
 
 
-				vector<Location> result;
-				size_t minSize = INT_MAX;
-				Location minLocation = Location(0,0,0);
-				int index;
-				vector<Location> l;
-
-				cout << "Got here\n";
-
-
-				while (locations.size() != 0) {
-					for (size_t s; s < locations.size(); s++) {
-						gr.dijkstraShortestPath(origL, locations[s]);
-						l = gr.getPath(origL, locations[s]);
-						if (l.size() < minSize) {
-							cout << "Found one\n";
-							minLocation = locations[s];
-							minSize = l.size();
-							index = s;
-						}
+			while (locations.size() != 0) {
+				for (size_t s; s < locations.size(); s++) {
+					gr.dijkstraShortestPath(origL, locations[s]);
+					l = gr.getPath(origL, locations[s]);
+					if (l.size() < minSize) {
+						cout << "Found one\n";
+						minLocation = locations[s];
+						minSize = l.size();
+						index = s;
 					}
-					minSize = INT_MAX;
-					l = gr.getPath(origL, minLocation);
-					for (size_t t = 0; t < l.size(); t++) {
+				}
+				minSize = INT_MAX;
+				l = gr.getPath(origL, minLocation);
+				for (size_t t = 0; t < l.size(); t++) {
+					result.push_back(l[t]);
+				}
+				cout << "Pushed back, now erasing \n";
+				locations.erase(locations.begin() + index);
+			}
+
+
+			if (!end) {
+				gr.dijkstraShortestPath(minLocation,origL);
+				l = gr.getPath(minLocation, origL);
+
+				for (size_t t = 0; t < l.size(); t++) {
+					if (t != 0) {
 						result.push_back(l[t]);
 					}
-					cout << "Pushed back, now erasing \n";
-					locations.erase(locations.begin() + index);
 				}
 
+			}
 
+			while (!end) {
 				for(size_t i = 0; i < result.size(); i++)
 				{
 					if (i != result.size() -1) {
 						cout << result.at(i).getID() << " -> ";
 					}
-					else {
-						cout << result.at(i).getID();
-						cout << endl;
-					}
+					else {cout << result.at(i).getID();}
 				}
-				break;
+
+				carga -= maxCargo * numTr;
+
+				if (carga < 0) {
+					end = true;
+				}
+			}
+
+			for(size_t i = 0; i < result.size(); i++)
+			{
+				if (i != result.size() -1) {
+					cout << result.at(i).getID() << " -> ";
+				}
+				else {cout << result.at(i).getID();}
+			}
+
+			break;
 			}
 
     		case 4:
+    		{
     			break;
+    		}
     }
     return 0;
 }
