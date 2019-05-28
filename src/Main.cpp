@@ -265,8 +265,9 @@ int main() {
 				vector<Location>::iterator it = deliveryPoints.begin();
 				while(it != deliveryPoints.end()){
 					if(!(it->checkIfHasTag("shop")))
-						deliveryPoints.erase(it);
-					it++;
+						it = deliveryPoints.erase(it);
+					else
+						it++;
 				}
 
 				for (size_t i = 0; i < locations.size(); i++) {
@@ -290,7 +291,7 @@ int main() {
 
     		case 3:
     			cout << "caso 3\n";
-    			//FAZER A FUNÇAO PARA DISTRIBUIÇAO DE AREAS
+    			//FAZER A FUNï¿½AO PARA DISTRIBUIï¿½AO DE AREAS
     			//FAZER FLOYD-WARSHALL PARA TODOS OS VEICULOS
     		break;
     	}
