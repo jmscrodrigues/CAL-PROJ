@@ -75,6 +75,7 @@ class Graph {
 	bool dfsIsDAG(Vertex<T> *v) const;
 public:
 	vector<Vertex<T> *> vertexSet;
+	vector<vector<Vertex<T>*>> getnext() const;
 	vector<int> Ids;
 	GraphViewer * gv;
 	int getNumVertex() const;
@@ -108,6 +109,13 @@ template <class T>
 int Graph<T>::getNumVertex() const {
 	return vertexSet.size();
 }
+
+template <class T>
+vector<vector<Vertex<T>*>> Graph<T>::getnext() const
+{
+	return next;
+}
+
 
 /*
  * Auxiliary function to find a vertex with a given content.
@@ -524,28 +532,55 @@ void Graph<T>::unweightedShortestPath(const T &orig) {
 
 template<class T>
 void Graph<T>::floydWarshallShortestPath() {
-	int nVert = this->vertexSet.size();
-
+	const int infinity = 999999;
+	int nVert = vertexSet.size();
+	cout << "nVert" << nVert << endl;
 	minDist.resize(nVert);
 	for (auto & ele : minDist) ele.resize(nVert);
 
 	next.resize(nVert);
 	for (auto & ele : next) ele.resize(nVert);
 
-
-	int dist[nVert][nVert];
-	for (int i = 0; i < nVert; i++){
-		for (int j = 0; j < nVert; j++){
-			dist[i][j] = 0;
+	for (int i = 0; i < nVert; i++) {
+		for (int j = 0; j < nVert; j++) {
+			minDist.at(i).at(j) = infinity;
+			next.at(i).at(j) = NULL;
 		}
 	}
 
-	for(int k = 0; k < nVert; k++){
-		for(int i = 0; i < nVert; i++){
-			for(int j = 0; j < nVert; j++){
-				if(dist[i][k] + dist[k][j] < dist[i][j]){
-					dist[i][j] = dist[i][k] + dist[k][j];
-					minDist.at(i).at(j) =  dist[i][j];
+	cout << "adsfghj" << endl;
+
+	for (Vertex<T> * vertex : vertexSet) {
+		for (const Edge<T> & edge : vertex->adj) {
+			int i1=-1, i2=-1;
+			for (int i = 0; i < nVert; i++)
+				if (vertexSet.at(i)->info == vertex->info)
+					i1 = i;
+			for (int i = 0; i < nVert; i++)
+				if (vertexSet.at(i)->info == edge.dest->info)
+					i2 = i;
+
+			minDist.at(i1).at(i2) = edge.weight;
+			next.at(i1).at(i2) = edge.dest;
+		}
+	}
+
+	for (int i = 0 ; i < nVert; i++) {
+		minDist.at(i).at(i) = 0;
+		next.at(i).at(i) = vertexSet.at(i);
+	}
+
+	cout << "ihgfds" << endl;
+
+	for (int k = 0 ; k < nVert; k++) {
+		cout << "k" << endl;
+		for (int i = 0; i < nVert; i++) {
+			cout << "i" << endl;
+			for (int j = 0 ; j < nVert; j++) {
+				cout << "j" << endl;
+				if (minDist.at(i).at(k) + minDist.at(k).at(j) < minDist.at(i).at(j)) {
+					minDist.at(i).at(j) =  minDist.at(i).at(k) + minDist.at(k).at(j);
+					cout << minDist.at(i).at(j) << endl;
 					next.at(i).at(j) = next.at(i).at(k);
 				}
 			}
@@ -558,30 +593,40 @@ vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	vector<T> res;
 	int nVert = vertexSet.size();
 
-	Vertex<T> * v1, *v2;
+	Vertex<T> * v1, * v2;
 	v1 = findVertex(orig);
 	v2 = findVertex(dest);
-	if (v1 == NULL || v2 == NULL) return res;
 
-	int a, b;
-	for (int i = 0; i < nVert; i++){
-		if (vertexSet.at(i)->info == v1->info){
-			a = i;
-		}
-		if (vertexSet.at(i)->info == v2->info){
-			b = i;
-		}
-	}
 
-	if(next.at(a).at(b) == NULL) return res;
+	if (v1 == NULL || v2 == NULL) {
+		cout << "null" << endl;
+		return res;}
+
+	int i1, i2;
+	for (int i = 0; i < nVert; i++)
+		if (vertexSet.at(i)->info == v1->info)
+			i1 = i;
+	for (int i = 0; i < nVert; i++)
+		if (vertexSet.at(i)->info == v2->info)
+			i2 = i;
+
+
+	if (next.at(i1).at(i2) == NULL) return res;
 	res.push_back(v1->info);
-	while (v1->info != v2->info) {
-		v1 = next.at(a).at(b);
+	while(v1->info != v2->info) {
+		v1 = next.at(i1).at(i2);
 		res.push_back(v1->info);
 		for (int i = 0; i < nVert; i++)
 			if (vertexSet.at(i)->info == v1->info)
-				a = i;
+				i1 = i;
 	}
+
+	for(unsigned int i = 0; i < res.size(); i++)
+	{
+		cout << res.at(i).getID() << endl;
+	}
+
+
 	return res;
 }
 

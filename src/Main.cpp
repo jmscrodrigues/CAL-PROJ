@@ -272,7 +272,7 @@ int main() {
 						it++;
 				}
 
-				cout << "� da delivery ? \n";
+				cout << "É da delivery ? \n";
 
 				vector<Location> result = gr.getSingleDeliveryPath(origL, garage, locations);
 /*
@@ -286,8 +286,26 @@ int main() {
 
     		case 3:
     			cout << "caso 3\n";
-    			//FAZER A FUN�AO PARA DISTRIBUI�AO DE AREAS
+    			//FAZER A FUNï¿½AO PARA DISTRIBUIï¿½AO DE AREAS
     			//FAZER FLOYD-WARSHALL PARA TODOS OS VEICULOS
+    			int carga = 0;
+				int numberNeedTrucks = 1;
+				//FAZER A FUN�AO PARA DISTRIBUI�AO DE AREAS
+				for (unsigned int i = 0; i < products.size(); i++)
+				{
+					carga += products.at(i).getQuantity() * products.at(i).getVolume();
+				}
+
+				cout << carga << endl;
+
+
+				while (!getCarga(capTruck, carga))
+				{
+					numberNeedTrucks++;
+					carga = carga - capTruck;
+				}
+
+				cout << numberNeedTrucks << endl;
     		break;
     	}
     }
