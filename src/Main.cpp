@@ -164,7 +164,7 @@ int main() {
 				cin >> numb;
 
 				vector<int> idDest;
-				vector<bool> valid;
+				vector <bool> valid;
 
 				int idD;
 				for (int i = 1; i <= numb; i++) {
@@ -172,35 +172,21 @@ int main() {
 					cout << "Destination " << i << " id? (needs to be shop, otherwise is deleted) \n";
 					cin >> idD;
 					idDest.push_back(idD);
-					valid.push_back(false);
-				}
-
-				for (unsigned int t = 0; t < idDest.size(); t++) {
 					for(unsigned int j = 0; j < gr.Ids.size();j++) {
-						if (gr.Ids[j] == idDest[t]) {
-							cout << "SAW ONE\n";
-							valid[t] = true;
+						if (gr.Ids[j] == idD) {
+							ret = true;
+							break;
 						}
 					}
-				}
-
-				for (unsigned int k = 0; k < valid.size(); k++)
-				{
-					cout << "Checking if there's no wrong id's\n";
-					if (valid[k] == false) {
-						cout << k << endl;
-						cout << idDest[k] << endl;
-						ret = true;
-						break;
-					}
-				}
-
-				if (ret) {
-					cout << "Wrong id's no 1\n";
-					break;
+					valid.push_back(ret);
+					ret = false;
 				}
 
 				cout << "IM HERE \n";
+				cout << idDest.size()<< endl;
+				for (unsigned int k = 0; k < valid.size(); k++) {
+					cout << valid[k] << endl;
+				}
 
 
 				for(unsigned int i = 0; i < gr.Ids.size();i++) {
@@ -217,6 +203,43 @@ int main() {
 
 				if ((orig != true) || (destin != true)) {
 					cout << "Wrong id's no 2\n";
+					break;
+				}
+
+				cout << "GOT HERE" << endl;
+
+				if (idDest.size() != 1) {
+					for (unsigned int t = 0; t < idDest.size(); t++) {
+						cout << idDest[t] << endl;
+						for(unsigned int j = 0; j < gr.Ids.size();j++) {
+							cout << "Testing \n";
+							if (gr.Ids[j] == idDest[t]) {
+								//ret = false;
+								valid[t] = false;
+								break;
+							}
+						}
+					}
+					for (unsigned int k = 0; k < valid.size(); k++) {
+						if (valid[k] == true) {
+							ret = true;
+							break;
+						}
+					}
+				}
+
+				else {
+					for (unsigned int k = 0; k < gr.Ids.size(); k++) {
+						if (gr.Ids[k] == idD) {
+							cout << "AGORA DÁ\n";
+							ret = false;
+						}
+					}
+				}
+
+
+				if (ret) {
+					cout << "Wrong id's no 1\n";
 					break;
 				}
 
@@ -251,6 +274,8 @@ int main() {
 					}
 				}
 
+				cout << "Got here 3 \n";
+
 				Location garage = Location(garId,xCoord,yCoord);
 
 				for (auto v : gr.vertexSet) {
@@ -260,9 +285,9 @@ int main() {
 					}
 				}
 
-				cout << "Got here 3\n";
+				cout << "Got here 4\n";
 
-
+/*
 				vector<Location> deliveryPoints = gr.bfs(origL);
 				vector<Location>::iterator it = deliveryPoints.begin();
 				while(it != deliveryPoints.end()){
@@ -271,15 +296,56 @@ int main() {
 					else
 						it++;
 				}
+*/
 
-				cout << "É da delivery ? \n";
 
-				vector<Location> result = gr.getSingleDeliveryPath(origL, garage, locations);
-/*
+				//cout << "É da delivery ? \n";
+
+				vector<Location> result;
+				size_t minSize = INT_MAX;
+				Location minLocation = Location(0,0,0);
+				int index;
+				vector<Location> l;
+
+				cout << "Got here\n";
+
+
+				while (locations.size() != 0) {
+					for (size_t s; s < locations.size(); s++) {
+						gr.dijkstraShortestPath(origL, locations[s]);
+						l = gr.getPath(origL, locations[s]);
+						if (l.size() < minSize) {
+							cout << "Found one\n";
+							minLocation = locations[s];
+							minSize = l.size();
+							index = s;
+						}
+					}
+					minSize = INT_MAX;
+					l = gr.getPath(origL, minLocation);
+					for (size_t t = 0; t < l.size(); t++) {
+						result.push_back(l[t]);
+					}
+					cout << "Pushed back, now erasing \n";
+					locations.erase(locations.begin() + index);
+				}
+
+				gr.dijkstraShortestPath(minLocation,garage);
+				l = gr.getPath(minLocation, garage);
+
+				for (size_t t = 0; t < l.size(); t++) {
+					if (t != 0) {
+						result.push_back(l[t]);
+					}
+				}
+
 				for(size_t i = 0; i < result.size(); i++)
 				{
-					cout << result.at(i).getID() << " -> ";
-				}*/
+					if (i != result.size() -1) {
+						cout << result.at(i).getID() << " -> ";
+					}
+					else {cout << result.at(i).getID();}
+				}
 				break;
     		}
 
@@ -291,6 +357,7 @@ int main() {
     			int carga = 0;
 				int numberNeedTrucks = 1;
 				//FAZER A FUN�AO PARA DISTRIBUI�AO DE AREAS
+
 				for (unsigned int i = 0; i < products.size(); i++)
 				{
 					carga += products.at(i).getQuantity() * products.at(i).getVolume();
@@ -298,12 +365,12 @@ int main() {
 
 				cout << carga << endl;
 
-
+/*
 				while (!getCarga(capTruck, carga))
 				{
 					numberNeedTrucks++;
 					carga = carga - capTruck;
-				}
+				}*/
 
 				cout << numberNeedTrucks << endl;
     		break;
