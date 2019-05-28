@@ -591,7 +591,7 @@ vector<T> Graph<T>::getSingleDeliveryPath(const T & origin, const T & dest, vect
 	Location currentVertexL = (Location) origin;
 	T currentVertexT = origin;
 	vector<Location> delPL;
-	for(int i = 0; i < deliveryPoints.size(); i++){
+	for(size_t i = 0; i < deliveryPoints.size(); i++){
 		delPL.push_back((Location) deliveryPoints.at(i));
 	}
 	while(!deliveryPoints.empty()){
