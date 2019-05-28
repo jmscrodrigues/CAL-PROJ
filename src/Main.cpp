@@ -149,12 +149,16 @@ int main() {
     			//FAZER FLOYD-WARSHALL PARA 1 VEICULO
     			//BSF
     			int numb;
-				int orId;
+				int orId, garId;
 				bool ret;
 				double xCoord, yCoord;
+				bool orig = false, destin = false;
 
 				cout << "Origin's id?\n";
 				cin >> orId;
+
+				cout << "Last destination (garage) id? \n";
+				cin >> garId;
 
 				cout << "Number of destinations? \n";
 				cin >> numb;
@@ -165,7 +169,7 @@ int main() {
 				int idD;
 				for (int i = 1; i <= numb; i++) {
 
-					cout << "Destination " << i << "id? \n";
+					cout << "Destination " << i << " id? (needs to be shop, otherwise is deleted) \n";
 					cin >> idD;
 					idDest.push_back(idD);
 					valid.push_back(false);
@@ -173,7 +177,8 @@ int main() {
 
 				for (int t = 0; t < idDest.size(); t++) {
 					for(unsigned int j = 0; j < gr.Ids.size();j++) {
-						if (gr.Ids[t] == idDest[t]) {
+						if (gr.Ids[j] == idDest[t]) {
+							cout << "SAW ONE\n";
 							valid[t] = true;
 						}
 					}
@@ -181,6 +186,7 @@ int main() {
 
 				for (int t = 0; t < valid.size(); t++)
 				{
+					cout << "Checking if there's no wrong id's\n";
 					if (valid[t] == false) {
 						ret = true;
 						break;
@@ -188,9 +194,31 @@ int main() {
 				}
 
 				if (ret) {
+					cout << "Wrong id's\n";
 					break;
 				}
 
+				cout << "IM HERE \n";
+
+
+				for(unsigned int i = 0; i < gr.Ids.size();i++) {
+					if (gr.Ids[i] == orId) {
+						orig = true;
+					}
+				}
+
+				for(unsigned int t = 0; t < gr.Ids.size();t++) {
+					if (gr.Ids[t] == garId) {
+						destin = true;
+					}
+				}
+
+				if ((orig != true) || (destin != true)) {
+					cout << "Wrong id's\n";
+					break;
+				}
+
+				cout << "GOT HERE\n";
 				vector<Location> locations;
 
 				for (int t = 0; t < idDest.size(); t++) {
@@ -207,21 +235,51 @@ int main() {
 					if (v->getInfo().getID() == orId) {
 						xCoord = v->getInfo().getX();
 						yCoord = v->getInfo().getY();
-						Location origLoc = Location(orId,xCoord,yCoord);
 					}
 				}
 
+				cout << "Got here 2 \n";
 
-				vector<Location> deliveryPoints = gr.bfs(origLoc);
+				Location origL = Location(orId,xCoord,yCoord);
+
+				for (auto v : gr.vertexSet) {
+					if (v->getInfo().getID() == garId) {
+						xCoord = v->getInfo().getX();
+						yCoord = v->getInfo().getY();
+					}
+				}
+
+				Location garage = Location(garId,xCoord,yCoord);
+
+				for (auto v : gr.vertexSet) {
+					if (v->getInfo().getID() == garId) {
+						xCoord = v->getInfo().getX();
+						yCoord = v->getInfo().getY();
+					}
+				}
+
+				cout << "Got here 3\n";
+
+
+				vector<Location> deliveryPoints = gr.bfs(origL);
 				vector<Location>::iterator it = deliveryPoints.begin();
 				while(it != deliveryPoints.end()){
 					if(!(it->checkIfHasTag("shop")))
 						deliveryPoints.erase(it);
 					it++;
 				}
+
+				for (size_t i = 0; i < locations.size(); i++) {
+					if (find(deliveryPoints.begin(), deliveryPoints.end(), locations[i]) == deliveryPoints.end()) {
+						locations.erase(locations.begin() + i);
+						i--;
+					}
+				}
+
 				//gr.floydWarshallShortestPath();
 				//gr.getfloydWarshallPath(orig1,dest1);
-				vector<Location> result = gr.getSingleDeliveryPath(orig1, dest1, deliveryPoints);
+				vector<Location> result = gr.getSingleDeliveryPath(origL, garage, locations);
+
 				for(int i = 0; i < result.size(); i++)
 				{
 					cout << result.at(i).getID() << " -> ";
